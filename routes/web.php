@@ -44,12 +44,14 @@ Route::post('/announcements/store', [AnnouncementController::class, 'store'])->m
 Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->middleware('auth.dashboard');
 Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->middleware('auth.dashboard');
 Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->middleware('auth.dashboard');
-Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->middleware('auth.dashboard');
+Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy')->middleware('auth.dashboard');
 
 Route::resource('forum', AnnualForumController::class)->middleware('auth.dashboard');
 
 
 // email subscription
+// search route
+// Route::get('search-subscriber', [SubscribeController::class, 'search'])->middleware('auth.dashboard');
 Route::resource('subscriber', SubscribeController::class)->middleware('auth.dashboard');
 // toogle subscrubed
 Route::put('toggle-status', [SubscribeController::class, 'toggleStatus'])->name('subscriber.toggle');

@@ -37,6 +37,7 @@
                 'icon' => '<iconify-icon icon="ic:outline-email" width="26"></iconify-icon>',
                 'label' => 'Subscribers',
                 'path' => '/subscriber',
+                'count' => App\Models\Subscriber::all()->count(),
             ],
             'admin' => [
                 'icon' => '<iconify-icon icon="eos-icons:admin-outlined" width="26"></iconify-icon>',
@@ -85,7 +86,15 @@
                         </ul>
                     </li>
                 @else
-                    <x-sidebar-item :title="$value['label']" :path="$value['path']">
+                    @php
+                        if (isset($value['count'])) {
+                            $count = $value['count'];
+                        } else {
+                            $count = null;
+                        }
+                    @endphp
+
+                    <x-sidebar-item :title="$value['label']" :path="$value['path']" :count="$count">
                         {!! $value['icon'] !!}
                     </x-sidebar-item>
                 @endif

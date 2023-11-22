@@ -13,4 +13,12 @@ class Subscriber extends Model
         'email',
         'subscribed'
     ];
+
+
+
+    // scope for search
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('email', 'LIKE', '%' . $keyword . '%');
+    }
 }

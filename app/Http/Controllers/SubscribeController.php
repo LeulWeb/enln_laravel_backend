@@ -12,10 +12,18 @@ class SubscribeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $subscriberList = Subscriber::latest()->paginate();
+
+        if ($request->input('keyword')) {
+            $subscriberList =  Subscriber::search($request->input('keyword'))->latest()->paginate();
+            // dd($request->input('keyword'));
+        }
+
         return view('subscribe.index', [
-            'subscriberList' => Subscriber::latest()->paginate()
+            'subscriberList' => $subscriberList
         ]);
     }
 
@@ -80,4 +88,19 @@ class SubscribeController extends Controller
         // $subscriber->subscribed != $subscriber->subscribed;
         // dd($subscriber->subscribed);
     }
+
+
+
+    // handle search
+    // public function search(Request $request)
+    // {
+    //     $keyword = $request->input('search');
+
+
+    // $subscriberList = Subscriber::search($keyword)->latest()->paginate();
+
+    // return view('subscribe.index', [
+
+    // ]);
+    // }
 }
