@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SubscribeController extends Controller
 {
@@ -20,17 +22,22 @@ class SubscribeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
     }
 
-    /**
+    /**dsf
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'email' => 'required|email|unique:subscribers,email'
+        ]);
+
+        Subscriber::create($validated);
+        Mail::to($validated['email'])->send(new WelcomeMail());
+        return redirect()->route('subscriber.index')->with('success', 'New subscription email added successfully');
     }
 
     /**
@@ -66,10 +73,11 @@ class SubscribeController extends Controller
     }
 
 
-    public function toggleStatus(Subscriber $subscriber)
+    public function toggleStatus(Subscriber $subscriber, Request $request)
     {
-        dd($subscriber->subscribed);
-        $subscriber->subscribed != $subscriber->subscribed;
-        dd($subscriber->subscribed);
+        dd($request);
+        // dd($subscriber->subscribed);
+        // $subscriber->subscribed != $subscriber->subscribed;
+        // dd($subscriber->subscribed);
     }
 }

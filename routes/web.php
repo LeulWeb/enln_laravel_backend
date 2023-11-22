@@ -51,6 +51,8 @@ Route::resource('forum', AnnualForumController::class)->middleware('auth.dashboa
 
 // email subscription
 Route::resource('subscriber', SubscribeController::class)->middleware('auth.dashboard');
+// toogle subscrubed
+Route::put('toggle-status', [SubscribeController::class, 'toggleStatus'])->name('subscriber.toggle');
 
 
 // Route for auth
@@ -59,3 +61,8 @@ Route::post('/register', [AuthController::class, 'store']);
 Route::get('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+
+Route::get('/test-email', function () {
+    return view('email.welcome');
+});

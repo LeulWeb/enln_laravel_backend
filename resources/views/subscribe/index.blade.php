@@ -1,17 +1,34 @@
 @extends('layout')
 
 @section('content')
-    <x-typography.h4>
-        News Later Subscribers
-    </x-typography.h4>
+    <div class="flex justify-between py-4">
+        <x-typography.h4>
+            News Later Subscribers
+        </x-typography.h4>
 
 
-    {{-- create button --}}
-    {{-- <a href='announcements/create' type="button"
-        class="text-white flex items-center space-x-3  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-        <iconify-icon icon="mingcute:announcement-line" width="22"></iconify-icon>
-        <span>Make Announcement</span>
-    </a> --}}
+        {{-- create button --}}
+
+        <form action="{{ route('subscriber.store') }}" method="post">
+            @csrf
+            <label for="subsciber" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Add
+                Subscriber</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <iconify-icon icon="line-md:email"></iconify-icon>
+                </div>
+                <input type="email" id="subsciber"
+                    class="block w-96 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="jhoneDoe@gmail.com" required name="email">
+                <button type="submit"
+                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Subscribe</button>
+            </div>
+
+            @error('email')
+                <x-typography.error-form>{{ $message }}</x-typography.error-form>
+            @enderror
+        </form>
+
     </div>
 
 
@@ -153,13 +170,16 @@
                         <td class="px-6
                                     py-4 flex items-center space-x-3">
 
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" @checked($item->subscribed)>
-                                <div
-                                    class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-
-                            </label>
+                            <form action="{{ route('subscriber.toggle', ['subscriber' => $item->id]) }}" method="post">
+                                @method('put')
+                                @csrf
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" value="{{ $item->subscribed ? 1 : 0 }}" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </form>
 
 
 
@@ -179,21 +199,7 @@
 
 
 
-                            <div class="form-group">
-                                <label for="is_active" class="block text-sm font-medium text-gray-700">Active</label>
-                                <div class="flex items-center mt-2">
-                                    <!-- Hidden field to store the actual value (true/false) -->
-                                    <input type="hidden" name="is_active" value="0">
 
-                                    <!-- Switch input -->
-                                    <input id="is_active" name="is_active" type="checkbox"
-                                        class="form-checkbox h-6 w-6 text-indigo-600 transition duration-150 ease-in-out"
-                                        {{ $item->is_active ? 'checked' : '' }}>
-                                    <label for="is_active" class="ml-3">
-                                        <span class="block text-sm font-medium text-gray-700">Yes</span>
-                                    </label>
-                                </div>
-                            </div>
 
                             @php
                                 $route = 'subscriber.destroy';
@@ -206,6 +212,8 @@
                 @endforeach
             </tbody>
         </table>
+
+
         <div class="px-4">
             {{ $subscriberList->links('vendor.pagination.tailwind') }}
         </div>
