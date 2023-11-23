@@ -45,7 +45,7 @@
     <div class="py-4">
 
 
-        <form method="post" action="{{"/announcements/".$announcement->id}}" class="w-5/12">
+        <form method="post" action="{{ '/announcements/' . $announcement->id }}" class="w-5/12">
             @csrf
             @method('put')
             <div class="mb-6">

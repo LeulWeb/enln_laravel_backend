@@ -70,7 +70,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
                         <input type="date" id="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="date" value=" value="{{ old('date') }}">
+                            name="date" value="{{ old('date') }}">
                         @error('date')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -92,10 +92,10 @@
                 {{-- Rich Editor --}}
 
                 <div>
-                    <div class="mb-6 w-full">
-                        <label for="title"
+                    <div class="mb-6 w-full ">
+                        <label for="tinymce"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Announcement</label>
-                        <textarea name="body" id="editor" cols="30" value="{{ old('body') }} rows="10"></textarea>
+                        <textarea class="form-control" name="body" id="tinymce">{{ old('body') }}</textarea>
                         @error('body')
                             <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -107,6 +107,44 @@
             <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
+
+        {{-- <script type="text/javascript">
+            tinymce.init({
+                selector: 'textarea#tinymce',
+                height: 600
+            });
+
+            $(document).ready(function() {
+
+                var formId = '#save-content-form';
+
+                $(formId).on('submit', function(e) {
+                    e.preventDefault();
+
+                    var data = $(formId).serializeArray();
+                    data.push({
+                        name: 'body',
+                        value: tinyMCE.get('tinymce').getContent()
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: $(formId).attr('data-action'),
+                        data: data,
+                        success: function(response, textStatus, xhr) {
+                            window.location = response.redirectTo;
+                        },
+                        complete: function(xhr) {
+
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            var response = XMLHttpRequest;
+
+                        }
+                    });
+                });
+            });
+        </script> --}}
 
     </div>
 @endsection

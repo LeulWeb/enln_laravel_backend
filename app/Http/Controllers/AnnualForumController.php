@@ -11,14 +11,17 @@ class AnnualForumController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $forumList = AnnualForum::latest()->paginate(5);
 
-        return view('forum.index',[
-            'forumList'=>AnnualForum::latest()->paginate(5)
+        if ($request->input('keyword')) {
+            $forumList = AnnualForum::search($request->input('keyword'))->latest()->paginate();
+        }
+
+        return view('forum.index', [
+            'forumList' => $forumList
         ]);
-
-
     }
 
     /**
@@ -34,14 +37,14 @@ class AnnualForumController extends Controller
      */
     public function store(AnnualForumRequest $request)
     {
-        $formField =$request->validated();
+        $formField = $request->validated();
 
-        if($request->hasFile('image')){
-            $image=$request->file('image');
-            $imageName =time().'.'.$image->getClientOriginalName();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalName();
             $destinationPath = public_path('forum_pic');
             $image->move($destinationPath, $imageName);
-            $formField['image']= 'forum_pic/'.$imageName;
+            $formField['image'] = 'forum_pic/' . $imageName;
         }
 
         AnnualForum::create($formField);
@@ -53,8 +56,8 @@ class AnnualForumController extends Controller
      */
     public function show(AnnualForum $forum)
     {
-        return view('forum.show',[
-            'forum'=>$forum
+        return view('forum.show', [
+            'forum' => $forum
         ]);
     }
 
@@ -63,8 +66,8 @@ class AnnualForumController extends Controller
      */
     public function edit(AnnualForum $forum)
     {
-        return view('forum.edit',[
-            'forum'=> $forum
+        return view('forum.edit', [
+            'forum' => $forum
         ]);
     }
 
@@ -73,19 +76,18 @@ class AnnualForumController extends Controller
      */
     public function update(AnnualForumRequest $request, AnnualForum $forum)
     {
-        $formField =$request->validated();
+        $formField = $request->validated();
 
-        if($request->hasFile('image')){
-            $image=$request->file('image');
-            $imageName =time().'.'.$image->getClientOriginalName();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalName();
             $destinationPath = public_path('forum_pic');
             $image->move($destinationPath, $imageName);
-            $formField['image']= 'forum_pic/'.$imageName;
+            $formField['image'] = 'forum_pic/' . $imageName;
         }
 
         $forum->update($formField);
         return redirect()->route('forum.index')->with('success', 'Annual forum updated successfully');
-
     }
 
     /**

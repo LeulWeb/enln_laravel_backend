@@ -10,8 +10,8 @@ class Story extends Model
     use HasFactory;
 
 
-       /*
-        
+    /*
+
             'title',
 'content',
 'date_published',
@@ -19,10 +19,10 @@ class Story extends Model
 'is_top',
 'tags',
 'thumbnail'
-        
+
         */
 
-    protected $fillable=[
+    protected $fillable = [
         'title',
         'content',
         'date_published',
@@ -32,6 +32,11 @@ class Story extends Model
         'thumbnail',
         'summary'
     ];
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('title', 'LIKE', '%' . $keyword . '%');
+    }
 
 
     // casting to array

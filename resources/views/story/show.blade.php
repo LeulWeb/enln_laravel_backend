@@ -68,28 +68,36 @@
                     </div>
 
 
-                    {{-- using explode function --}}
-                    @php
-                        // $refernceArray = explode(' ', $story['reference']);
-                        $refernceArray = preg_split('/[\s,]+/', $story['tags']);
-                    @endphp
+                    <div class="flex flex-col md:flex-row  items-center md:justify-between justify-center ">
+                        {{-- using explode function --}}
+                        <div>
+                            <p class="text-dark dark:text-white">References</p>
 
-                    @foreach ($refernceArray as $value)
-                        <span
-                            class="bg-blue-300 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ $value }}</span>
-                    @endforeach
+                            @php
+                                $refernceArray = explode(',', $story['reference']);
+                                // $refernceArray = preg_split('/[\s,]+/', $story['tags']);
+                            @endphp
 
-                    {{-- refernces --}}
-                    @php
-                        // $refernceArray = explode(' ', $story['reference']);
-                        $refernceArray = preg_split('/[\s,]+/', $story['refernces']);
-                    @endphp
+                            @foreach ($refernceArray as $value)
+                                <span
+                                    class="bg-blue-300 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ $value }}</span>
+                            @endforeach
 
-                    {{-- @foreach ($refernceArray as $value)
-                        <marquee <a href="#"
-                            class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 inline-flex items-center justify-center">
-                            {{ $value }}</a></marquee>
-                    @endforeach --}}
+                        </div>
+                        <div>
+                            {{-- refernces --}}
+                            <p class="text-dark dark:text-white">Tags</p>
+                            @php
+                                $tagsArray = explode(',', $story['tags']);
+                                // $refernceArray = preg_split('/[\s,]+/', $story['refernces']);
+                            @endphp
+
+                            @foreach ($tagsArray as $value)
+                                <span
+                                    class="bg-blue-300 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ $value }}</span>
+                            @endforeach
+                        </div>
+                    </div>
 
 
                 </div>

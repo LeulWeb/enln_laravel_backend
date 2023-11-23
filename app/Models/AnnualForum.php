@@ -19,11 +19,16 @@ class AnnualForum extends Model
 
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'title',
         'content',
         'image',
         'location',
         'event_date'
     ];
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('title', 'LIKE', '%' . $keyword . '%');
+    }
 }

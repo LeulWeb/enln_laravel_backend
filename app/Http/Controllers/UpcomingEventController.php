@@ -11,10 +11,17 @@ class UpcomingEventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $upcomingList = UpcomingEvent::latest()->paginate(5);
+        if ($request->input('keyword')) {
+            $upcomingList = UpcomingEvent::search($request->input('keyword'))->latest()->paginate(5);
+        }
+
+
         return view('upcoming.index', [
-            'upcomingList'=>UpcomingEvent::latest()->paginate(5),
+            'upcomingList' => $upcomingList,
         ]);
     }
 
@@ -33,7 +40,7 @@ class UpcomingEventController extends Controller
     {
         $formField = $request->validated();
         UpcomingEvent::create($formField);
-        return redirect()->route('upcoming.index')->with('success','New upcoming event is added');
+        return redirect()->route('upcoming.index')->with('success', 'New upcoming event is added');
     }
 
     /**
@@ -49,9 +56,9 @@ class UpcomingEventController extends Controller
      */
     public function edit(UpcomingEvent $upcoming)
     {
-       return view('upcoming.edit',[
-        'upcoming'=>$upcoming
-       ]);
+        return view('upcoming.edit', [
+            'upcoming' => $upcoming
+        ]);
     }
 
     /**
@@ -61,8 +68,7 @@ class UpcomingEventController extends Controller
     {
         $formField = $request->validated();
         $upcoming->update($formField);
-        return redirect()->route('upcoming.index')->with('success','Upcoming event is updated successfully');
-
+        return redirect()->route('upcoming.index')->with('success', 'Upcoming event is updated successfully');
     }
 
     /**
@@ -71,7 +77,6 @@ class UpcomingEventController extends Controller
     public function destroy(UpcomingEvent $upcoming)
     {
         $upcoming->delete();
-        return redirect()->route('upcoming.index')->with('success','Upcoming event is deleted successfully');
-
+        return redirect()->route('upcoming.index')->with('success', 'Upcoming event is deleted successfully');
     }
 }

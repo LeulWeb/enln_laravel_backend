@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,8 +14,55 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
 
+
+    {{-- TinyMCE --}}
+    {{-- tiny mce --}}
+    <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+
+
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea#tinymce',
+            height: 300
+        });
+
+        $(document).ready(function() {
+
+            var formId = '#save-content-form';
+
+            $(formId).on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(formId).serializeArray();
+                data.push({
+                    name: 'body',
+                    value: tinyMCE.get('tinymce').getContent()
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(formId).attr('data-action'),
+                    data: data,
+                    success: function(response, textStatus, xhr) {
+                        window.location = response.redirectTo;
+                    },
+                    complete: function(xhr) {
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        var response = XMLHttpRequest;
+
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
     {{-- CK ClassicEditor --}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script> --}}
 
 
 
@@ -30,6 +78,9 @@
         }
     </script>
     <script src="../path/to/flowbite/dist/datepicker.js"></script>
+
+
+
 
 
 </head>
@@ -100,13 +151,55 @@
 
 
     {{-- working with CK editor --}}
-    <script>
+    {{-- <script>
         ClassicEditor
             .create(document.querySelector('#editor'))
             .catch(error => {
                 console.error(error);
             });
-    </script>
+    </script> --}}
+
+
+
+
+    {{-- <script type="text/javascript">
+        console.log('================================')
+        tinymce.init({
+            selector: 'textarea#tinymce',
+            height: 600
+        });
+
+        $(document).ready(function() {
+
+            var formId = '#save-content-form';
+
+            $(formId).on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(formId).serializeArray();
+                data.push({
+                    name: 'body',
+                    value: tinyMCE.get('tinymce').getContent()
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(formId).attr('data-action'),
+                    data: data,
+                    success: function(response, textStatus, xhr) {
+                        window.location = response.redirectTo;
+                    },
+                    complete: function(xhr) {
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        var response = XMLHttpRequest;
+
+                    }
+                });
+            });
+        });
+    </script> --}}
 
 
     {{-- Date picker  --}}

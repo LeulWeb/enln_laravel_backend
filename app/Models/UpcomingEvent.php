@@ -9,7 +9,7 @@ class UpcomingEvent extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
 
         'title',
         'content',
@@ -18,4 +18,10 @@ class UpcomingEvent extends Model
         'end_date',
 
     ];
+
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('title', 'LIKE', '%' . $keyword . '%');
+    }
 }

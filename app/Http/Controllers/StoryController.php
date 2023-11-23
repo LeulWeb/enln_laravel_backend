@@ -11,10 +11,18 @@ class StoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('story.index',[
-            'newsList'=>Story::latest()->paginate(5)
+
+        $newsList = Story::latest()->paginate(5);
+
+        if ($request->input('keyword')) {
+            $newsList = Story::search($request->input('keyword'))->latest()->paginate();
+        }
+
+
+        return view('story.index', [
+            'newsList' => $newsList
         ]);
     }
 
@@ -37,7 +45,7 @@ class StoryController extends Controller
         // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             // Specify the full destination path
             $destinationPath = public_path('story');
@@ -46,7 +54,7 @@ class StoryController extends Controller
             $image->move($destinationPath, $imageName);
 
             // Update the formField with the image path
-            $formField['thumbnail'] = 'story/'.$imageName;
+            $formField['thumbnail'] = 'story/' . $imageName;
         }
 
         // Create a new Story record in the database
@@ -61,8 +69,8 @@ class StoryController extends Controller
      */
     public function show(Story $new)
     {
-        return view('story.show',[
-            'story'=>$new
+        return view('story.show', [
+            'story' => $new
         ]);
     }
 
@@ -71,8 +79,8 @@ class StoryController extends Controller
      */
     public function edit(Story $new)
     {
-        return view('story.edit',[
-            'story'=>$new
+        return view('story.edit', [
+            'story' => $new
         ]);
     }
 
@@ -81,12 +89,12 @@ class StoryController extends Controller
      */
     public function update(StoryRequest $request, Story $new)
     {
-        $formField= $request->validated();
+        $formField = $request->validated();
 
         // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             // Specify the full destination path
             $destinationPath = public_path('story');
@@ -95,7 +103,7 @@ class StoryController extends Controller
             $image->move($destinationPath, $imageName);
 
             // Update the formField with the image path
-            $formField['thumbnail'] = 'story/'.$imageName;
+            $formField['thumbnail'] = 'story/' . $imageName;
         }
 
         $new->update($formField);
@@ -109,6 +117,5 @@ class StoryController extends Controller
     {
         $new->delete();
         return redirect()->route('new.index')->with('success', 'News deleted successfully');
-
     }
 }
