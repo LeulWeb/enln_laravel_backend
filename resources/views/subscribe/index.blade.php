@@ -128,28 +128,43 @@
                                 {{ $item->email }}
                             </td>
                             <td class="px-6 py-4">
-                                @if ($item->subscribed)
+                                {{-- @if ($item->subscribed)
                                     <iconify-icon icon="material-symbols:notifications-active-outline-sharp"
                                         style="color: green;" width="24"></iconify-icon>
                                 @else
                                     <iconify-icon icon="mdi:bell-off-outline" style="color: red;"
                                         width="24"></iconify-icon>
-                                @endif
+                                @endif --}}
+
+
+                                <form method="post" id="update-status-form"
+                                    action="{{ route('subscriber.update', ['subscriber' => $item->id]) }}">
+                                    @csrf
+                                    @method('put')
+
+
+                                    <select id="countries"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        name="subscribed" onchange="submitForm()">
+                                        <option value="0" @selected($item->subscribed)>Muted</option>
+                                        <option value="1" @selected($item->subscribed)>Active</option>
+                                    </select>
+
+                                </form>
+
+
+
+                                <script>
+                                    function submitForm() {
+                                        document.getElementById('update-status-form').submit();
+                                    }
+                                </script>
 
                             </td>
                             <td class="px-6
                                     py-4 flex items-center space-x-3">
 
-                                <form action="{{ route('subscriber.toggle', ['subscriber' => $item->id]) }}" method="post">
-                                    @method('put')
-                                    @csrf
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" value="{{ $item->subscribed ? 1 : 0 }}" class="sr-only peer">
-                                        <div
-                                            class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                        </div>
-                                    </label>
-                                </form>
+
 
 
 

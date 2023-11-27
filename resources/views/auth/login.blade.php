@@ -62,8 +62,6 @@
             Login
         </button>
 
-        <div class="w-full text-end text-blue-500">
-            <a href="/register">Add new admin? Register Here</a>
-        </div>
+
     </form>
 @endsection

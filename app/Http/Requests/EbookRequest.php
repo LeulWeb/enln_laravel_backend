@@ -28,7 +28,7 @@ class EbookRequest extends FormRequest
             "author" => ['string', 'nullable', 'max:255'],
             'content' => ['string', 'min:150', 'max:1000'],
             'published_date' => ['date', 'nullable'],
-            'pdf' => ['required_without:youtube_link',  'file', 'mimes:pdf, doc, docx, ppt, pptx, xls, xlsx', 'max:102400'],
+            'pdf' => ['required_without:youtube_link',  'file', 'mimes:pdf, doc, docx, ppt, pptx, xls, xlsx,zip,gzip', 'max:102400'],
             'youtube_link' => ['sometimes', 'required_without:pdf', 'nullable', 'regex:/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/'],
             'category' => ['required'],
             'thumbnail' => ['nullable', 'image', 'mimes:png,jpg,jpeg,gif', 'max:10240']

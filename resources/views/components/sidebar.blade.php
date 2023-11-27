@@ -42,7 +42,7 @@
             'admin' => [
                 'icon' => '<iconify-icon icon="eos-icons:admin-outlined" width="26"></iconify-icon>',
                 'label' => 'Admin',
-                'path' => '/',
+                'path' => '/admin',
             ],
         ];
 

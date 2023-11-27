@@ -12,10 +12,16 @@ class EbookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $ebookList = Ebook::latest()->paginate(5);
+
+        if ($request->input('keyword')) {
+            $ebookList = Ebook::search($request->input('keyword'))->latest()->paginate(5);
+        }
+
         return view("ebook.index", [
-            'ebookList' => Ebook::latest()->paginate(5)
+            'ebookList' => $ebookList
         ]);
     }
 

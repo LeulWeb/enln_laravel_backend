@@ -37,7 +37,7 @@ class AuthController extends Controller
         $validatedInput['password'] = Hash::make($validatedInput['password']);
         $user = User::create($validatedInput);
 
-        return redirect('/login')->with('success', 'user has been created successfully');
+        return redirect()->route('admin.index')->with('success', 'user has been created successfully');
     }
 
     // return login form

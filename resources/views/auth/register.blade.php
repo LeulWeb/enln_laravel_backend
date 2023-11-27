@@ -2,7 +2,7 @@
 
 
 @section('title')
-    Sign Up
+    Create Admin
 @endsection
 @section('content')
     <form action="/register" method="post" enctype="multipart/form-data">
@@ -139,12 +139,16 @@
 
 
         <button type="submit" class="py-2 w-full text-white bg-blue-500 text-center rounded-lg font-semibold my-2">
-            Sign Up
+            Create Admin
         </button>
 
-        <div class="w-full text-end text-blue-500">
-            <a href="/login"><span class="text-black">Already admin? </span>Login here</a>
-        </div>
+        <div><a href="{{ route('admin.index') }}">
+                <div class="flex w-full items-center justify-end">
+                    <iconify-icon icon="ep:back" style="color: blue;"></iconify-icon>
+                    <p class="text-blue-500 ">Back </p>
+                </div>
+            </a></div>
+
     </form>
 
 

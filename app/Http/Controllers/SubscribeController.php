@@ -66,9 +66,18 @@ class SubscribeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Subscriber $subscriber, Request $request)
     {
-        // dd($reqeust->all())
+        // dd($request->all(), $subscriber);
+        $validated = $request->validate([
+            'subscribed' => 'boolean'
+        ]);
+        $subscriber->update([
+            'subscribed' => $validated['subscribed']
+        ]);
+
+        $status = $subscriber->subscribed == 0 ? 'Muted' : 'Active';
+        return redirect()->route('subscriber.index')->with('success', $subscriber->email . "is now " . $status);
     }
 
     /**
@@ -83,7 +92,7 @@ class SubscribeController extends Controller
 
     public function toggleStatus(Subscriber $subscriber, Request $request)
     {
-        dd($request);
+        // dd($request, $subscriber);
         // dd($subscriber->subscribed);
         // $subscriber->subscribed != $subscriber->subscribed;
         // dd($subscriber->subscribed);

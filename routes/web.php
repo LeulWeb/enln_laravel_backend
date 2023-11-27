@@ -3,6 +3,7 @@
 use App\Models\UpcomingEvent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\SubscribeController;
@@ -64,6 +65,7 @@ Route::get('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
+Route::resource('admin', AdminController::class);
 
 Route::get('/test-email', function () {
     return view('email.welcome');

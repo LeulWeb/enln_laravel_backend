@@ -209,7 +209,7 @@
                                             stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
                                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you
-                                        sure you want to delete this announcement?</h3>
+                                        sure you want to delete {{ $ebook->title }}?</h3>
                                     <form action={{ route('ebook.destroy', ['ebook' => $ebook->id]) }} method="POST">
                                         @csrf
                                         @method('delete')

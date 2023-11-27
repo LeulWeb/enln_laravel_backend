@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Story;
+use App\Models\Subscriber;
+use App\Events\NewsCreated;
 use Illuminate\Http\Request;
+use App\Mail\NewNewsNotification;
 use App\Http\Requests\StoryRequest;
+use Illuminate\Support\Facades\Mail;
 
 class StoryController extends Controller
 {
@@ -58,7 +62,18 @@ class StoryController extends Controller
         }
 
         // Create a new Story record in the database
-        Story::create($formField);
+        $news = Story::create($formField);
+
+        // event(new NewsCreated($news));
+
+
+        // Mail::to($validated['email'])->send(new WelcomeMail());
+
+        $subscriberList = Subscriber::where('subscribed', true)->get();
+
+        foreach ($subscriberList as $subscriber) {
+            Mail::to($subscriber->email)->send(new NewNewsNotification($news));
+        }
 
         // Redirect to the index page with a success message
         return redirect()->route('new.index')->with('success', 'News story created successfully');

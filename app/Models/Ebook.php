@@ -31,4 +31,9 @@ class Ebook extends Model
         'category',
         'thumbnail',
     ];
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('title', 'LIKE', '%' . $keyword . '%');
+    }
 }
