@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\StoryApiController;
 use App\Http\Controllers\Api\SubscriberApiController;
 use App\Http\Controllers\Api\AnnualForumApiController;
 use App\Http\Controllers\Api\AnnouncementApiController;
+use App\Http\Controllers\Api\BlogApiController;
 use App\Http\Controllers\Api\UpcomingEventApiController;
 
 /*
@@ -30,6 +31,7 @@ Route::apiResource('forum', AnnualForumApiController::class);
 Route::apiResource('story', StoryApiController::class);
 Route::apiResource('resource', EbookApiController::class);
 Route::apiResource('subscriber', SubscriberApiController::class);
+Route::apiResource('blog', BlogApiController::class);
 // Route::get('ebook/{ebook}/download', [EbookController::class, 'downloadResource'])->name('ebook.download')->middleware('auth.dashboard');
 
 //! work on this man

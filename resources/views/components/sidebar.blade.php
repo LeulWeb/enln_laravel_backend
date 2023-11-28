@@ -23,6 +23,12 @@
                 'path' => '/new',
             ],
 
+            'blog' => [
+                'icon' => '<iconify-icon icon="clarity:note-line" width="26"></iconify-icon>',
+                'label' => 'Blog',
+                'path' => '/blog',
+            ],
+
             'resources' => [
                 'icon' => '<iconify-icon icon="ph:books" width="26"></iconify-icon>',
                 'label' => 'Resources',

@@ -9,6 +9,7 @@ use App\Http\Controllers\StoryController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\AnnualForumController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UpcomingEventController;
 
 /*
@@ -66,6 +67,7 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::resource('admin', AdminController::class);
+Route::resource('blog', BlogController::class);
 
 Route::get('/test-email', function () {
     return view('email.welcome');
