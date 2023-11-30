@@ -70,7 +70,6 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('logo.png') }}" alt="ENLN Logo">
             <h2>ENLN Newsletter</h2>
         </div>
 

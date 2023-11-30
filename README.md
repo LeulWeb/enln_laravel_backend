@@ -58,8 +58,8 @@ http://localhost:8000/api/forum
 
 > **Subscriber API**
 to add new subscriber to our newsletter, use *POST* http verb and pass in parameter of email with a value. 
-for example this will add a new subscriber with email. 
-http://localhost:8000/api/subscriber/?email=t@gmail.com
+for example this will add a new subscriber with email and name . 
+http://localhost:8000/api/subscriber?name=someone&email=someone@gmail.com
 if the request is successful you will get a success message indicating new subscription is add. 
 
 
