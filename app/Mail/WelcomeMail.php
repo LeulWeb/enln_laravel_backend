@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Subscriber;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -23,9 +24,10 @@ class WelcomeMail extends Mailable
 
 
 
-    public function __construct()
+
+    public function __construct(Subscriber $email)
     {
-        //
+        $this->email = $email;
     }
 
     /**
@@ -46,6 +48,7 @@ class WelcomeMail extends Mailable
     {
         return new Content(
             view: 'email.welcome',
+            with: ['email', $this->email]
         );
     }
 

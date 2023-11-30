@@ -45,6 +45,10 @@
 
 
         <div class="content">
+
+
+            Dear {{ $email->name }},
+
             <h3>Welcome to the Ethiopia Nutrition Leaders Network Community!</h3>
 
 

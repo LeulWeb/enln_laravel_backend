@@ -23,6 +23,7 @@ class SubscriberApiController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:subscribers,email',
+            'name' => 'required|string|min:5|max:20'
         ]);
 
         $subscriber = Subscriber::create($validated);

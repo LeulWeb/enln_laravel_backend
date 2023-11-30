@@ -40,11 +40,12 @@ class SubscribeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email|unique:subscribers,email'
+            'email' => 'required|email|unique:subscribers,email',
+            'name' => 'required|string|min:5|max:20'
         ]);
 
-        Subscriber::create($validated);
-        Mail::to($validated['email'])->send(new WelcomeMail());
+        $email = Subscriber::create($validated);
+        Mail::to($validated['email'])->send(new WelcomeMail($email));
         return redirect()->route('subscriber.index')->with('success', 'New subscription email added successfully');
     }
 
