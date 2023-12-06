@@ -10,13 +10,11 @@ class UpcomingEvent extends Model
     use HasFactory;
 
     protected $fillable = [
-
         'title',
         'content',
         'location',
         'start_date',
         'end_date',
-
     ];
 
 

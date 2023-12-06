@@ -13,6 +13,7 @@ class UpcomingEventApiController extends Controller
      */
     public function index()
     {
+        dd(UpcomingEvent::latest()->get());
         return response()->json(UpcomingEvent::latest()->get());
     }
 

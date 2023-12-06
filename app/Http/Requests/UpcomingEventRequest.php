@@ -33,19 +33,20 @@ class UpcomingEventRequest extends FormRequest
         */
 
         return [
-            'title'=>['string','required','min:12','max:255'],
-            'content'=>['string', 'required','min:12', 'max:1000'],
-            'location'=>['string', 'max:1000','nullable'],
-            'star_date'=>['date','nullable'],
-            'end_date'=>['date','after:start_date','nullable'],
+            'title' => ['string', 'required', 'min:12', 'max:255'],
+            'content' => ['string', 'required', 'min:12', 'max:1000'],
+            'location' => ['string', 'max:1000', 'nullable'],
+            'start_date' => ['date', 'nullable'],
+            'end_date' => ['date', 'after:start_date', 'nullable'],
         ];
     }
 
 
     // return list of message
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
-            'end_date.after'=>'The end date must be a date after the start date'
+            'end_date.after' => 'The end date must be a date after the start date'
         ];
     }
 }

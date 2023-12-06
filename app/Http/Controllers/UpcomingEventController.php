@@ -39,7 +39,8 @@ class UpcomingEventController extends Controller
     public function store(UpcomingEventRequest $request)
     {
         $formField = $request->validated();
-        UpcomingEvent::create($formField);
+
+        $upcomingEvent = UpcomingEvent::create($formField);
         return redirect()->route('upcoming.index')->with('success', 'New upcoming event is added');
     }
 
